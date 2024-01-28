@@ -20,7 +20,6 @@ public class SoundManager : MonoBehaviour
         instance = this;
     }
     public void PlayOnce(SouvlakiYlika souvlaki) {
-        Debug.Log((int)souvlaki);
         source.PlayOneShot(ylikalist[(int)souvlaki]);
         clipqueue.Enqueue(ylikalist[(int)souvlaki]);
     }
