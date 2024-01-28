@@ -5,10 +5,15 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class RecipeManager : MonoBehaviour {
+    public static RecipeManager instance; 
+
     public SouvlakiRecipe souvlakiRecipe;
 
     public Button tzatziki, patates, kremmidi, ntomata, gyros;
     public TextMeshProUGUI tzatzikiT, patatesT, kremmidiT, ntomataT, gyrosT;
+    private void Awake() {
+        instance = this;
+    }
     private void Start() {
         CreateInstance();
         tzatziki.onClick.AddListener(() => {
