@@ -15,6 +15,9 @@ public class StartButtonScript : MonoBehaviour {
         #endif
     }
 
+    public void BacktoMenu() {
+        SceneManager.LoadScene(0);
+    }
 
 
 }
