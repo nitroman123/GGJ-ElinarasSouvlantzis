@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class SoundManager : MonoBehaviour
@@ -9,15 +10,23 @@ public class SoundManager : MonoBehaviour
 
     public AudioSource source;
     public AudioClip[] ylikalist;
-    public AudioClip kaliapantisi, kakiapantisi, epanafora;
+    public AudioClip kaliapantisi, kakiapantisi, epanafora , eisagogi;
     public Queue<AudioClip> clipqueue = new();
     public bool speel = false;
 
+    public UnityEvent OnEisagogiPlayed = new UnityEvent();
     [Header("Image Changer")]
     public Image head;
     public Sprite goodface, badface;
     private void Awake() {
         instance = this;
+    }
+    private IEnumerator Start() {
+        
+        yield return new WaitForSeconds(2);
+        source.PlayOneShot(eisagogi);
+        yield return new WaitUntil(() => !source.isPlaying);
+        OnEisagogiPlayed.Invoke();
     }
     public void PlayOnce(SouvlakiYlika souvlaki) {
         source.PlayOneShot(ylikalist[(int)souvlaki]);
@@ -40,7 +49,7 @@ public class SoundManager : MonoBehaviour
     }
     public IEnumerator spellRoutine() {
         speel = true;
-        yield return new WaitUntil(() =>  !speel);
+        yield return new WaitUntil(() => !speel);
         bool correct = RecipeManager.instance.souvlakiRecipe.CorrectRecipy();
         if (head.sprite != null) {
             head.sprite = correct ? goodface : badface;
